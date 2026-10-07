@@ -1,0 +1,663 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API Gateway - Payments",
+    "description": "Payments documentation",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/payment/update": {
+      "put": {
+        "tags": [
+          "Payment"
+        ],
+        "summary": "Update payments without sending to ERP",
+        "description": "This endpoint allows you to update payments without sending them to the ERP.\r\nYou can modify the status and partial payments",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PaymentRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PaymentRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PaymentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "APIGateway.Domain.Models.Custom.GeoPoint": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number",
+            "format": "double"
+          },
+          "y": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Class for latitude and longitude"
+      },
+      "APIGateway.Domain.Models.Customer.PartialPayment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "checkNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "checkDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "paymentMethodId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "paymentId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "companyAccountCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "userCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "paymentMethod": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PaymentMethod"
+          },
+          "partialPaymentFiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PartialPaymentFile"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "A partial payment consolidated into a single payment; each partial payment can specify a payment method, account, and other specific parameters."
+      },
+      "APIGateway.Domain.Models.Customer.PartialPaymentFile": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fileCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "partialPaymentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "base64Data": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "userCode": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Documents regarding partial payments, e.g., photos of checks, transfer receipts, promissory notes, etc."
+      },
+      "APIGateway.Domain.Models.Customer.Payment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "paymentStateId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "userCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "geopoint": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Custom.GeoPoint"
+          },
+          "partialPayments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PartialPayment"
+            },
+            "nullable": true
+          },
+          "paymentPortfolios": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PaymentPortfolio"
+            },
+            "nullable": true
+          },
+          "paymentState": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PaymentState"
+          },
+          "systemValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerName": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Customer.PaymentInstallment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "paymentPortfolioId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "portfolioInstallmentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "systemValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "observation": {
+            "type": "string",
+            "nullable": true
+          },
+          "portfolioInstallment": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PortfolioInstallment"
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Customer.PaymentMethod": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "requiresAccountNumber": {
+            "type": "boolean"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyCode": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Customer.PaymentPortfolio": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "portfolioId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "paymentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "observations": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "userCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "payment": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.Payment"
+          },
+          "portfolio": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.Portfolio"
+          },
+          "paymentInstallments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PaymentInstallment"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Customer.PaymentRequest": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "paymentStateId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "partialPayments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PartialPayment"
+            },
+            "nullable": true
+          },
+          "paymentPortfolios": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PaymentPortfolio"
+            },
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "userCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "systemValue": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Customer.PaymentState": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyCode": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Customer.Portfolio": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "companyCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "voucherNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "issueDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "initialAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "payment": {
+            "type": "number",
+            "format": "double"
+          },
+          "paymentNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "daysPastDue": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "balance": {
+            "type": "number",
+            "format": "double"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "portfolioTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "portfolioInstallments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PortfolioInstallment"
+            },
+            "nullable": true
+          },
+          "backedAmount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Customer.PortfolioInstallment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "companyCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "portfolioId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "amountToPay": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "payment": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "paymentNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "backedAmount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "systemValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "observation": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Payment",
+      "description": "Payments management\n\nThis service allows you to record and view payments. \n            It is mainly userd by mobile app. It is not part of the integration"
+    }
+  ]
+}
