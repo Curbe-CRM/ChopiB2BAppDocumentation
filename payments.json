@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "API Gateway - Payments",
-    "description": "Payments documentation",
+    "title": "Chopi B2B App integration",
+    "description": "Documentation",
     "version": "1.0"
   },
   "paths": {
@@ -29,6 +29,40 @@
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PaymentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/payment-method/create": {
+      "post": {
+        "tags": [
+          "PaymentMethod"
+        ],
+        "summary": "Creates a new payment method.",
+        "description": "Creates a new payment method for the authenticated company.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PaymentMethod"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PaymentMethod"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PaymentMethod"
               }
             }
           }
@@ -658,6 +692,9 @@
     {
       "name": "Payment",
       "description": "Payments management\n\nThis service allows you to record and view payments. \n            It is mainly userd by mobile app. It is not part of the integration"
+    },
+    {
+      "name": "PaymentMethod"
     }
   ]
 }
