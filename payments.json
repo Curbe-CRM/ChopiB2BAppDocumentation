@@ -2,10 +2,150 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Chopi B2B App integration",
-    "description": "Documentation",
+    "description": "Documentation for payments integration",
     "version": "1.0"
   },
   "paths": {
+    "/api/v1/company-account/create": {
+      "post": {
+        "tags": [
+          "CompanyAccount"
+        ],
+        "summary": "Creates a new company account.",
+        "description": "Creates a new company account for the authenticated company.\r\nThese will be used for payments from the app",
+        "requestBody": {
+          "description": "The company account to create.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.CompanyAccount"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.CompanyAccount"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.CompanyAccount"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/company-account/update": {
+      "put": {
+        "tags": [
+          "CompanyAccount"
+        ],
+        "summary": "Updates an existing company account.",
+        "requestBody": {
+          "description": "The company account request containing the company account code to update and updated information.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfigMicroservice.Domain.Models.CompanyAccountRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfigMicroservice.Domain.Models.CompanyAccountRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfigMicroservice.Domain.Models.CompanyAccountRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/company-account/change-state/{code}/{status}": {
+      "patch": {
+        "tags": [
+          "CompanyAccount"
+        ],
+        "summary": "Changes the state of a company account (active/inactive).",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "description": "The code of the company account to update.",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "path",
+            "description": "The new status of the company account (true or false).",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/company-account/get-by-code/{code}": {
+      "get": {
+        "tags": [
+          "CompanyAccount"
+        ],
+        "summary": "Retrieves a company account by its code.",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "description": "The code of the company account to retrieve.",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/company-account/all-by-company": {
+      "get": {
+        "tags": [
+          "CompanyAccount"
+        ],
+        "summary": "Retrieves all company accounts associated with the authenticated company.",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/v1/payment/update": {
       "put": {
         "tags": [
@@ -73,10 +213,1206 @@
           }
         }
       }
+    },
+    "/api/v1/payment-method/update": {
+      "put": {
+        "tags": [
+          "PaymentMethod"
+        ],
+        "summary": "Updates an existing payment method.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PaymentMethodRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PaymentMethodRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/APIGateway.Domain.Models.Customer.PaymentMethodRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/payment-method/change-state/{code}/{status}": {
+      "patch": {
+        "tags": [
+          "PaymentMethod"
+        ],
+        "summary": "Changes the state of a payment method (active/inactive).",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "description": "The code of the payment method to update.",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "path",
+            "description": "The new status of the payment method (true or false).",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/payment-method/get-by-code/{code}": {
+      "get": {
+        "tags": [
+          "PaymentMethod"
+        ],
+        "summary": "Retrieves a payment method by its code.",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "description": "The code of the payment method to retrieve.",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/payment-method/all-by-company": {
+      "get": {
+        "tags": [
+          "PaymentMethod"
+        ],
+        "summary": "Retrieves all payment methods associated with the authenticated company.",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "APIGateway.Domain.Models.Auth.MainRole": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGateway.Domain.Models.Auth.Role"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Auth.Role": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mainRoleId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "companyCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "editable": {
+            "type": "boolean"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "parentId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "inverseParent": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGateway.Domain.Models.Auth.Role"
+            },
+            "nullable": true
+          },
+          "parent": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Auth.Role"
+          },
+          "userCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "level": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "mainRole": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Auth.MainRole"
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Auth.User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "personCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "description": "Unique string code of the user 1 to 128 characters.",
+            "nullable": true
+          },
+          "displayName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailVerified": {
+            "type": "boolean"
+          },
+          "photoUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "disabled": {
+            "type": "boolean"
+          },
+          "tenantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "customClaims": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/System.Text.Json.Nodes.JsonNode"
+            },
+            "nullable": true
+          },
+          "person": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.Person"
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "systemValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "systemValueType": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGateway.Domain.Models.Auth.Role"
+            },
+            "nullable": true
+          },
+          "establishmentsIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "positionsIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "userRoles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGateway.Domain.Models.Auth.UserRole"
+            },
+            "nullable": true
+          },
+          "supervisorCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Auth.UserRole": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "roleId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "role": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Auth.Role"
+          },
+          "user": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Auth.User"
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.AccountType": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyAccounts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.CompanyAccount"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.AppSetting": {
+        "type": "object",
+        "properties": {
+          "companyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "appId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "themeMode": {
+            "type": "string"
+          },
+          "primaryColor": {
+            "type": "string",
+            "nullable": true
+          },
+          "backgroundColor": {
+            "type": "string",
+            "nullable": true
+          },
+          "secondaryColor": {
+            "type": "string",
+            "nullable": true
+          },
+          "properties": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.Property"
+          },
+          "data": {
+            "type": "string",
+            "nullable": true
+          },
+          "company": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.Company"
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.Company": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "organizationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "personId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "tradename": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "organization": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.Organization"
+          },
+          "person": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.Person"
+          },
+          "appSettings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.AppSetting"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.CompanyAccount": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "accountNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "financialInstitutionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "accountTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "systemValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "accountType": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.AccountType"
+          },
+          "company": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.Company"
+          },
+          "financialInstitution": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.FinancialInstitution"
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.Configuration": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          },
+          "measurementUnit": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.Country": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "dialInCodes": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.File": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "extension": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userCode": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.FinancialInstitution": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyAccounts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.CompanyAccount"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.Gender": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "systemValue": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.Location": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "politicalDivisionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "mainStreet": {
+            "type": "string",
+            "nullable": true
+          },
+          "secondaryStreet": {
+            "type": "string",
+            "nullable": true
+          },
+          "reference": {
+            "type": "string",
+            "nullable": true
+          },
+          "houseNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "systemValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "systemValueType": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "userCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "politicalDivision": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.PoliticalDivision"
+          },
+          "tempKey": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.Organization": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.Person": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "documentTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "idCard": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "socialReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "birthdate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "juridicalPerson": {
+            "type": "boolean"
+          },
+          "idCardVerified": {
+            "type": "boolean"
+          },
+          "genderId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "documentType": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.PersonDocumentType"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.Gender"
+          },
+          "personEmails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.PersonEmail"
+            },
+            "nullable": true
+          },
+          "personFiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.PersonFile"
+            },
+            "nullable": true
+          },
+          "personLocations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.PersonLocation"
+            },
+            "nullable": true
+          },
+          "personPhones": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.PersonPhone"
+            },
+            "nullable": true
+          },
+          "user": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Auth.User"
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.PersonDocumentType": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "countryId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.PersonEmail": {
+        "type": "object",
+        "properties": {
+          "personId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.PersonFile": {
+        "type": "object",
+        "properties": {
+          "personId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "fileId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "file": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.File"
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.PersonLocation": {
+        "type": "object",
+        "properties": {
+          "personId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "locationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "string"
+          },
+          "location": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.Location"
+          },
+          "person": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.Person"
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.PersonPhone": {
+        "type": "object",
+        "properties": {
+          "personId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.PoliticalDivision": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "countryId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "politicalDivisionTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parentId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "regionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "country": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.Country"
+          },
+          "parent": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.PoliticalDivision"
+          },
+          "politicalDivisionType": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.PoliticalDivisionType"
+          },
+          "region": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.Region"
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.PoliticalDivisionType": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.Property": {
+        "type": "object",
+        "properties": {
+          "configurations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.Configuration"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Config.Region": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "countryId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "country": {
+            "$ref": "#/components/schemas/APIGateway.Domain.Models.Config.Country"
+          }
+        },
+        "additionalProperties": false
+      },
       "APIGateway.Domain.Models.Custom.GeoPoint": {
         "type": "object",
         "properties": {
@@ -369,6 +1705,36 @@
           "updateDate": {
             "type": "string",
             "format": "date-time"
+          },
+          "userCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyCode": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIGateway.Domain.Models.Customer.PaymentMethodRequest": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean",
+            "nullable": true
           },
           "userCode": {
             "type": "string",
@@ -685,6 +2051,74 @@
           }
         },
         "additionalProperties": false
+      },
+      "ConfigMicroservice.Domain.Models.CompanyAccountRequest": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "userCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "accountNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "accountTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "System.Text.Json.Nodes.JsonNode": {
+        "type": "object",
+        "properties": {
+          "options": {
+            "$ref": "#/components/schemas/System.Text.Json.Nodes.JsonNodeOptions"
+          },
+          "parent": {
+            "$ref": "#/components/schemas/System.Text.Json.Nodes.JsonNode"
+          },
+          "root": {
+            "$ref": "#/components/schemas/System.Text.Json.Nodes.JsonNode"
+          }
+        },
+        "additionalProperties": false
+      },
+      "System.Text.Json.Nodes.JsonNodeOptions": {
+        "type": "object",
+        "properties": {
+          "propertyNameCaseInsensitive": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
       }
     }
   },
@@ -695,6 +2129,9 @@
     },
     {
       "name": "PaymentMethod"
+    },
+    {
+      "name": "CompanyAccount"
     }
   ]
 }
