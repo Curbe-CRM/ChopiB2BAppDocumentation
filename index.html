@@ -10,14 +10,27 @@
     *, *:before, *:after { box-sizing: inherit; }
     body { margin: 0; background: #fafafa; }
   </style>
+  <!-- Cargar librería de encriptación segura desde Cloudflare -->
+  <script src="https://cloudflare.com"></script>
+  <script>
+    const HASH_CORRECTO = "1896a6cab3af85ce9a3e47f111651471049e446345509bb5d721a2756969789b"; 
+    if (sessionStorage.getItem("api_autorizado") !== "true") {
+        const password = prompt("Introduce la contraseña para acceder a la documentación de ChopiB2B:");
+        // Convertimos lo que escribió el usuario a SHA-256
+        const hashUsuario = CryptoJS.SHA256(password).toString();
+      if (hashUsuario === HASH_CORRECTO) {
+        sessionStorage.setItem("api_autorizado", "true");
+      } else {
+        alert("Contraseña incorrecta. Acceso denegado.");
+        window.location.href = "https://github.com"; 
+      }
+    }
+  </script>
 </head>
 <body>
-
   <div id="swagger-ui"></div>
-
   <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
   <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-standalone-preset.js"></script>
-
   <script>
     window.onload = () => {
       window.ui = SwaggerUIBundle({
