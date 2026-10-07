@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>ChopiB2B - Documentación de la API</title>
+  <!-- Estilos oficiales de Swagger UI -->
+  <link rel="stylesheet" href="https://unpkg.com" />
+  <style>
+    html { box-sizing: border-box; overflow: -webkit-scrollbar; }
+    *, *:before, *:after { box-sizing: inherit; }
+    body { margin: 0; background: #fafafa; }
+  </style>
+</head>
+<body>
+
+  <div id="swagger-ui"></div>
+
+  <!-- Scripts oficiales de Swagger UI -->
+  <script src="https://unpkg.com"></script>
+  <script src="https://unpkg.com"></script>
+  
+  <script>
+    window.onload = () => {
+      window.ui = SwaggerUIBundle({
+        url: "payments.json", 
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        layout: "BaseLayout"
+      });
+    };
+  </script>
+</body>
+</html>
