@@ -11,11 +11,9 @@
     body { margin: 0; background: #fafafa; }
   </style>
   
-  <!-- ✅ CORREGIDO: Librería de encriptación segura desde Cloudflare CDNJS -->
   <script src="https://cloudflare.com"></script>
-  
   <script>
-    const HASH_CORRECTO = "1896a6cab3af85ce9a3e47f111651471049e446345509bb5d721a2756969789b"; 
+    const HASH_CORRECTO = "aaf55926836d8abf161914044d0637bdf42903f439afb6834135fa4ab6d449eb"; 
     
     if (sessionStorage.getItem("api_autorizado") !== "true") {
       const password = prompt("Introduce la contraseña para acceder a la documentación de ChopiB2B:");
