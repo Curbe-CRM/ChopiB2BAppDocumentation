@@ -39,7 +39,7 @@
   <script>
     window.onload = () => {
       // 🔒 MODIFICADO: Solo renderiza Swagger si pasó el filtro de la contraseña
-      if (sessionStorage.getItem("api_autorizado") === "true") {
+      //if (sessionStorage.getItem("api_autorizado") === "true") {
         window.ui = SwaggerUIBundle({
           url: "payments.json",
           dom_id: "#swagger-ui",
@@ -50,7 +50,7 @@
           ],
           layout: "BaseLayout"
         });
-      }
+      //}
     };
   </script>
 </body>
